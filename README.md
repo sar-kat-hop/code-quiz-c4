@@ -8,7 +8,7 @@ Unfortunately, due to difficulties getting my `endQuiz()` function to trigger on
 ![Homepage](./assets/Screenshot%20Capture%20-%202023-04-23%20-%2000-57-36.png)
 
 ## Installation & Use
-Visit the deployed app on [GitHub Pages]().
+Visit the deployed app on [GitHub Pages](https://sar-kat-hop.github.io/code-quiz-c4/).
 
 Please note that to end the quiz and enter your name/initials and save your score to local storage, you must click the 'End Quiz' button. This button is enabled from the start, so you can end the quiz at any point. 
 
