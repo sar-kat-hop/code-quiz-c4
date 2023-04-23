@@ -1,46 +1,79 @@
-
-const welcomeMsg = 
-"Welcome to the JavaScript Fundamentals Quiz. For each question, you'll have 10 seconds to choose the correct answer. When you're ready to start, click 'Start Quiz' below. Good luck!" ;
-
 const questions = [
     { 
         question: "Commonly used data types do NOT include:",
-        choices: ["A. strings", "B. booleans", "C. alerts"],
-        answer: "alerts"
-        
+        choiceA: 'Strings',
+        choiceB: 'Booleans',
+        choiceC: 'Alerts',
+        correct: 'Alerts'
+        // choices: ["A. strings", "B. booleans", "C. alerts"],
     },
     {
         question: "String values must be enclosed with ___ when being assigned to variables",
-        choices: ["A. commas ", "B. curly brackets ", "C. quotes"],
-        answer: "quotes"
+        // choices: ["A. commas ", "B. curly brackets ", "C. quotes"],
+        choiceA: 'Commas ,',
+        choiceB: 'Curly brackets {} ',
+        choiceC: 'Quotes "" ',
+        correct: "Quotes"
     },
     {
         question: "The condition in an if/else statement is enclosed by:",
-        choices: ["A. quotes ", "B. curly brackets ", "C. parentheses"],
-        answer: "parentheses"
+        // choices: ["A. quotes ", "B. curly brackets ", "C. parentheses"],
+        choiceA: 'Quotes ""',
+        choiceB: 'Curly brackets {}',
+        choiceC: 'Parentheses ()',
+        correct: "Parentheses"
     },
     {
         question: "An array in JavaScript can be used to store:",
-        choices: ["A. numbers and strings", "B. other arrays", "C. booleans", "D. all of the above"],
-        answer: "all of the above"
+        // choices: ["A. numbers and strings", "B. other arrays", "C. booleans", "D. all of the above"],
+        choiceA: 'Numbers and strings',
+        choiceB: 'Other arrays',
+        choiceC: 'Booleans',
+        choiceD: 'All of the above',
+        correct: "All of the above"
     }
 ];
 
-const correct = "Correct";
-const incorrect = "Incorrect";
+let questionStart = 0;
+let questionEnd = questions.length -1; 
+let count = 0;
+let score = 0;
 
-const questionStart = 0;
-
+const introEl = document.getElementById('intro');
+const welcomeMsg = document.getElementById('welcome-msg');
+const startBtn = document.getElementById("start-btn");
 const timerEl = document.getElementById("timer");
 const quizEl = document.getElementById("question");
 const choiceEl = document.getElementById("choices");
+const choiceLi = document.getElementsByClassName('choice');
+const choiceA = document.getElementById('choiceA');
+const choiceB = document.getElementById('choiceB');
+const choiceC = document.getElementById('choiceC');
+const choiceD = document.getElementById('choiceD');
+const answerCheckEl = document.getElementById('rightWrong');
+const scoreEl = document.getElementById('score');
 
-const newBtn = document.createElement("button");
-const newPara = document.createElement("p");
+// const newBtn = document.createElement("button");
+// const newPara = document.createElement("p");
+
+function showQuestion() {
+    let question = questions[questionStart];
+    quizEl.innerHTML = '<div><h2>' + question.question + '</h2></div>';
+    // choiceEl.innerHTML = '<div><p>' + question.choices;
+    choiceA.innerText = question.choiceA;
+    choiceB.textContent = question.choiceB;
+    choiceC.textContent = question.choiceC;
+    choiceD.textcontent = question.choiceD;
+};
+
+// function showChoices() {
+//     choiceLi.style.visibility = 'visible';
+//     choiceLi.setAttribute('visibility', 'visible');
+// };
 
 // timer
 function timer() {
-    const timeLeft = 40;
+    const timeLeft = 60;
 
     //setInterval() calls fxn to execute every 1000 milliseconds
     const timeInterval = setInterval(function () {
@@ -51,56 +84,120 @@ function timer() {
             timerEl.textContent = timeLeft + " second left";
             timeLeft--;
         } else {
-            timerEl.textContent = "";
+            timerEl.textContent = "Out of time";
             //clearInterval() to stop timer
             clearInterval(timeInterval);
         }
     }, 1000);
 };
 
-// append button with answer choices text to choiceEl and assign id
-function answerBtn(text, id){
-    newBtn.textContent = text;
-    newBtn.setAttribute("id", id);
+// function counter() {
+//     if (count <= timeLeft) {
+//         timerEl.innerHTML = count;
+//         count++;
+//     } else {
+//         count = 0;
+//         wrongAnswer();
+
+//         if(questionStart < questionEnd) {
+//             questionStart++;
+//             showQuestion();
+//         } else {
+//             clearInterval(timerEl);
+//         }
+//     }
+// };
+
+// only start quiz and timer on button click
+startBtn.addEventListener('click', function() {
+    welcomeMsg.innerHTML = ''; 
+    timer();
+    startQuiz();
+});
+
+function startQuiz() {
+    startBtn.style.visibility = 'hidden';
+    showQuestion();
+    // showChoices();
 };
 
-function displayQuestion(questionStart) {
-    const choices = questions[questionStart].choices;
-    const listItem = document.createElement("li");
+choiceEl.addEventListener('click', function() {
+    checkAnswer();
+});
 
-    quizEl.textContent = questions[questionStart].question;
-    
-    for (var i = 0; i < questions.length;) {
-        questions[i].textContent = questions.question;   
-        quizEl.appendChild(choiceEl);
-    };
-    
-    let i = 1;
-        choices.forEach(function(choice) {
-            choiceEl.appendChild(listItem); 
-                listItem.appendChild(answerBtn(i + ") " + choice + "liBtn"))
-
-            listItem.addEventListener("click", (ansEval));
-
-            i++;
-        });
-    };
-
-function ansEval(event) {
-    // listen for button click
-    // check if correct answer chosen
-    const ansBtn = event.target;
-
-    if (ansBtn.textContent == (questions[i].answer)) {
-        choiceEl.appendChild(newPara);
-        newPara.textContent = correct;
+function checkAnswer(answer) {
+    if (answer === questions[questionStart].correct) {
+        score++;
+        correctAnswer();
     } else {
-        choiceEl.appendChild(newPara);
-        newPara.textContent = incorrect;
+        wrongAnswer();
     }
 
-    questionStart++; //advance to next question regardless of result
-}
+    count = 0;
+    if(questionStart < questionEnd ) {
+        questionStart++;
+        showQuestion();
+    } else {
+        clearInterval(timeLeft);
+    }
+    localStorage.setItem('score', score);
+    scoreEl.innerHTML = 'Your score: ' + score;
+};
+
+function correctAnswer() {
+    answerCheckEl.innerHTML = 'Correct!';
+    score++;
+};
+
+function wrongAnswer() {
+    answer.innerHTML = 'Sorry, wrong answer!';
+    // timeLeft -= 15; //time penalty
+    // showQuestion();
+};
+
+// append button with answer choices text to choiceEl and assign id
+// function answerBtn(text, id){
+//     newBtn.textContent = text;
+//     newBtn.setAttribute("id", id);
+// };
+
+// function displayQuestion(questionStart) {
+//     const choices = questions[questionStart].choices;
+//     const listItem = document.createElement("li");
+
+//     quizEl.textContent = questions[questionStart].question;
+    
+//     for (var i = 0; i < questions.length;) {
+//         questions[i].textContent = questions.question;   
+//         quizEl.appendChild(choiceEl);
+//     };
+    
+//     let i = 1;
+//         choices.forEach(function(choice) {
+//             choiceEl.appendChild(listItem); 
+//                 listItem.appendChild(answerBtn(i + ") " + choice + "liBtn"))
+
+//             listItem.addEventListener("click", (ansEval));
+
+//             i++;
+//         });
+//     };
+
+// function ansEval(event) {
+//     // listen for button click
+//     // check if correct answer chosen
+//     const ansBtn = event.target;
+
+//     if (ansBtn.textContent == (questions[i].answer)) {
+//         choiceEl.appendChild(newPara);
+//         newPara.textContent = correct;
+//     } else {
+//         choiceEl.appendChild(newPara);
+//         newPara.textContent = incorrect;
+//     }
+
+//     questionStart++; //advance to next question regardless of result
+// }
 
     //display quiz done msg and user's score after user answers q4, with option to enter initials and save score, button to go back to start and button to view scores
 

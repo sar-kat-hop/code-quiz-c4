@@ -11,23 +11,38 @@
     <body>
         <div class="container" id="intro">
             <h1 class="welcome">JavaScript Fundamentals Quiz</h1>
+                <p id="welcome-msg">Welcome to the JavaScript Fundamentals Quiz. For each question, you'll have about 15 seconds to choose the correct answer. When you're ready to start, click 'Start Quiz' below. Good luck!</p>
             <h2 id="timer"></h2>
             <h2 id="scores"></h2>
+            <button type="button" class="" id="start-btn">Start Quiz!</button>
         </div>
 
         <div class="container" id="quiz">
-            <!-- <p id="question"></p> -->
+            <p id="question"></p>
             <div class="container" id="choices">
-                <!-- <button class="choice" id="choiceA"></button>
-                <button class="choice" id="choiceB"></button>
-                <button class="choice" id="choiceB"></button> -->
+                    <ul>
+                        <li class="choice">
+                            <button type="submit" id="choiceA" onclick="checkAnswer('choiceA')"></button>
+                        </li>
+                        <li class="choice">
+                            <button type="submit" id="choiceB" onclick="checkAnswer('choiceB')"></button>
+                        </li>
+                        <li class="choice">
+                            <button type="submit" id="choiceC" onclick="checkAnswer('choiceC')"></button>
+                        </li>
+                        <li class="choice">
+                            <button type="submit" id="choiceD" onclick="checkAnswer('choiceD')"></button>
+                        </li>
+                </ul>
             </div>
         </div>
 
         <div class="container" id="lowerContainer">
             <p id="rightWrong"></p>
+            <div class="score-container">
+                <p id="score"></p>
+            </div>
         </div>
-
-        <script src="./assets/script.js"></script>
     </body>
+    <script src="./assets/script.js"></script>
 </html>
