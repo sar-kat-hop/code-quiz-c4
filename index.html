@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Javascript Fundamentals Quiz</title>
+        <link rel="stylesheet" href="./assets/style.css">    
+    </head>
+    <body>
+        <main>
+            <header>
+                <h1>Javascript Coding Quiz</h1>
+                <div id="countdown-container"></div>
+            </header>
+
+            <div id="welcome-container" style="visibility: visible">
+                <p> Welcome! <br><br> For each question, you'll have about 15 seconds to choose the correct answer. <br><br> When you're ready to start, click the start button below. When you're done, click the 'End Quiz' button. <br><br> Good luck!</p>
+                <button id="start-button" onclick="startQuiz()"> Start Quiz </button>
+            </div>
+            <div id="quiz-container">
+                <!-- <p class="question"></p> -->
+            </div>
+            <div id="answer-container" style="visibility: hidden">
+                <button id='A' class="answer-button" onclick="handleUserChoice(this)"></button>
+                <button id='B' class="answer-button" onclick="handleUserChoice(this)"></button>
+                <button id='C' class="answer-button" onclick="handleUserChoice(this)"></button>
+                <button id='D' class="answer-button" onclick="handleUserChoice(this)"></button>
+            </div>
+            <div id="feedback-container"></div>
+            <!-- <div id="countdown-container"></div> -->
+            <div id="submit-container" visiblity="hidden">
+                <button id="submit-button" onclick="endQuiz()"> End Quiz </button>
+                <p id="note"> Psst: Click the 'End Quiz' button at any time you want to stop the quiz </p>
+            </div>
+        </main>
+    </body>
+<script src="./assets/script.js"></script>
+</html>
